@@ -1,10 +1,163 @@
 {% extends 'base.html' %}
-{% block content %}
-<a href="{% url 'create-blog' %}">BLOG CREATE</a>
-{% for blog in blogs %}
-<p>Title:{{ blog.title }}</p>
-<p>AUthor:{{ blog.owner.username }}</p>
-<hr>
-{% endfor %}
 
+{% block content %}
+<div class="container py-5">
+    <!-- Yuqori qism: Sarlavha va Tugma -->
+    <!-- flex-md-row yordamida mobil telefonda chiroyli ko'rinishi ta'minlandi -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">So'nggi maqolalar</h2>
+            <p class="text-secondary mb-0">Hamjamiyatimizdagi eng qiziqarli bloglarni o'qing</p>
+        </div>
+        <a href="{% url 'create-blog' %}" class="btn btn-primary btn-lg shadow-sm create-btn">
+            <i class="fas fa-plus-circle me-2"></i>Yangi post
+        </a>
+    </div>
+
+    <!-- Bloglar ro'yxati -->
+    <div class="row g-4">
+        {% for blog in blogs %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 blog-card">
+                <!-- Rasm qismi -->
+                <div class="card-img-wrapper">
+                    {% if blog.image %}
+                        <img src="{{ blog.image.url }}" class="card-img-top blog-img" alt="{{ blog.title }}">
+                    {% else %}
+                        <div class="bg-light d-flex align-items-center justify-content-center blog-img placeholder-img">
+                            <i class="fas fa-image fa-3x text-muted opacity-25"></i>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Kontent qismi -->
+                <div class="card-body p-4 d-flex flex-column">
+                    <!-- Sarlavha -->
+                    <h5 class="card-title fw-bold text-dark mb-3 blog-title">
+                        {{ blog.title }}
+                    </h5>
+
+                    <!-- Muallif va sana -->
+                    <div class="d-flex align-items-center mt-auto">
+                        <!-- Muallif avatari -->
+                        <div class="author-avatar me-3">
+                            {{ blog.owner.username|slice:":1"|upper }}
+                        </div>
+                        <div class="author-info">
+                            <p class="mb-0 fw-semibold text-dark">@{{ blog.owner.username }}</p>
+                            <span class="text-muted small">Muallif</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tugma qismi -->
+                <div class="card-footer bg-white border-0 p-4 pt-0">
+                    <!-- Eslatma: href ichidagi URL nomini o'zingizning urls.py faylingizdagi detail sahifa nomiga to'g'rilab olasiz (masalan: 'blog-detail') -->
+                    <a href="#" class="btn btn-outline-primary w-100 read-more-btn">
+                        Batafsil o'qish <i class="fas fa-arrow-right ms-1" style="font-size: 0.8rem;"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <!-- Bo'sh holat (Empty State) chiroyli qilindi -->
+        <div class="col-12 text-center py-5 empty-state">
+            <div class="mb-4">
+                <i class="fas fa-folder-open fa-4x text-muted opacity-25"></i>
+            </div>
+            <h3 class="fw-bold text-dark">Hozircha bloglar yo'q</h3>
+            <p class="text-secondary">Birinchilardan bo'lib maqola yozing va hamjamiyat bilan ulashing!</p>
+            <a href="{% url 'create-blog' %}" class="btn btn-primary mt-3 px-4 shadow-sm" style="border-radius: 10px;">
+                <i class="fas fa-pen me-2"></i>Yangi post yaratish
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    /* 1. Sarlavha uchun qisqartirish: 2 qatordan oshsa "..." qo'yadi va kard buzilmaydi */
+    .blog-title {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.4;
+        min-height: 2.8rem; /* Sarlavha kalta bo'lsa ham kard balandligi bir xil turishi uchun */
+        text-transform: capitalize;
+    }
+
+    /* 2. Kardlar uchun Hover Effekt */
+    .blog-card {
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        background: #ffffff;
+    }
+    .blog-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.08) !important;
+    }
+
+    /* 3. Rasmlar proporsiyasi (16:9) va Zoom effekti */
+    .card-img-wrapper {
+        overflow: hidden;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+    }
+    .blog-img {
+        width: 100%;
+        aspect-ratio: 16 / 9; /* Barcha rasmlarni standart 16:9 videoga o'xshash qilib kesadi */
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    .blog-card:hover .blog-img {
+        transform: scale(1.05); /* Sichqoncha borganda mayingina kattalashadi */
+    }
+
+    /* 4. Muallif Avatari (Zamonaviy gradient) */
+    .author-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* 5. 'Batafsil o'qish' tugmasi chiroyli hover qilingan */
+    .read-more-btn {
+        border-radius: 10px;
+        font-weight: 600;
+        padding: 10px 0;
+        transition: all 0.3s ease;
+    }
+    .read-more-btn:hover {
+        background-color: #0d6efd;
+        color: #ffffff;
+        border-color: #0d6efd;
+        box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+    }
+
+    .create-btn {
+        border-radius: 12px;
+        font-weight: 600;
+        padding: 12px 24px;
+    }
+
+    /* 6. Bo'sh holat (Empty State) dizayni */
+    .empty-state {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        padding: 60px 20px;
+        border: 1px dashed #e2e8f0;
+    }
+</style>
 {% endblock %}

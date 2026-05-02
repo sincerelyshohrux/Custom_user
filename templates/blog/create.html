@@ -1,9 +1,157 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h4>Blog create</h4>
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
- <p>{{ form.as_p }}</p>
-  <button type="submit">save</button>
-</form>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-7">
+            <!-- Animatsiya bilan chiquvchi kard -->
+            <div class="card create-card shadow-lg border-0">
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- Sarlavha qismi -->
+                    <div class="d-flex align-items-center mb-4 pb-2">
+                        <!-- Zamonaviy Gradient Ikonka -->
+                        <div class="icon-box me-3">
+                            <i class="fas fa-pen-nib fa-lg text-white"></i>
+                        </div>
+                        <div>
+                            <h2 class="fw-bold text-dark mb-1">Yangi post yaratish</h2>
+                            <p class="text-secondary mb-0">Fikrlaringiz va yangiliklaringizni hamjamiyat bilan ulashing</p>
+                        </div>
+                    </div>
+
+                    <hr class="mb-4 text-muted opacity-25">
+
+                    <!-- Form qismi -->
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="blog-form-wrapper">
+                            {{ form.as_p }}
+                        </div>
+
+                        <!-- Tugmalar -->
+                        <div class="mt-5 d-flex flex-wrap gap-3">
+                            <button type="submit" class="btn btn-primary px-5 py-2 shadow-sm action-btn">
+                                <i class="fas fa-paper-plane me-2"></i>Chop etish
+                            </button>
+                            <!-- Django'da bekor qilishni asosiy sahifaga yo'naltirish xavfsizroq, lekin javascript ham ishlaydi -->
+                            <a href="/" class="btn btn-light px-4 py-2 border action-btn text-secondary">
+                                Bekor qilish
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* 1. Kard uchun chiqish animatsiyasi va soya */
+    .create-card {
+        border-radius: 20px;
+        background: #ffffff;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.04) !important;
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* 2. Zamonaviy Gradient Ikonka qutisi */
+    .icon-box {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 16px rgba(13, 110, 253, 0.2);
+    }
+
+    /* 3. Django formasini chiroyli qilish */
+    .blog-form-wrapper p {
+        margin-bottom: 24px;
+    }
+
+    .blog-form-wrapper label {
+        font-weight: 600;
+        color: #475569;
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+    }
+
+    /* Input va Textarea larning umumiy ko'rinishi */
+    .blog-form-wrapper input[type="text"],
+    .blog-form-wrapper input[type="file"],
+    .blog-form-wrapper select,
+    .blog-form-wrapper textarea {
+        width: 100%;
+        padding: 14px 18px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 12px;
+        background-color: #f8fafc;
+        color: #334155;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    /* Textarea (maqola matni) uchun maxsus o'lcham */
+    .blog-form-wrapper textarea {
+        min-height: 220px;
+        resize: vertical;
+        line-height: 1.6;
+    }
+
+    /* Fokus (bosilganda) effekti - ko'k ramka va oq fon */
+    .blog-form-wrapper input:focus,
+    .blog-form-wrapper textarea:focus,
+    .blog-form-wrapper select:focus {
+        border-color: #0d6efd;
+        background-color: #ffffff;
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15);
+    }
+
+    /* Rasm yuklash maydoni uchun qo'shimcha dizayn */
+    .blog-form-wrapper input[type="file"] {
+        padding: 10px;
+        color: #64748b;
+    }
+    .blog-form-wrapper input[type="file"]::file-selector-button {
+        background-color: #e2e8f0;
+        color: #334155;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        margin-right: 15px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+    .blog-form-wrapper input[type="file"]::file-selector-button:hover {
+        background-color: #cbd5e1;
+    }
+
+    /* 4. Tugmalar uchun hover */
+    .action-btn {
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .action-btn:hover {
+        transform: translateY(-2px);
+    }
+</style>
 {% endblock %}

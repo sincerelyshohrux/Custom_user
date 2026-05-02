@@ -1,9 +1,152 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h4>Regsiter</h4>
-<form method="post">
-  {% csrf_token %}
- <p>{{ nurulloh.as_p }}</p>
-  <button type="submit">save</button>
-</form>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+            <!-- Animatsiya bilan chiquvchi auth-card -->
+            <div class="card auth-card shadow-lg border-0" style="border-radius: 20px;">
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- Sarlavha va Zamonaviy Ikonka -->
+                    <div class="text-center mb-4 pb-2">
+                        <div class="icon-box mx-auto mb-3">
+                            <i class="fas fa-user-plus fa-lg text-white"></i>
+                        </div>
+                        <h2 class="fw-bold text-dark mb-1">Ro'yxatdan o'tish</h2>
+                        <p class="text-secondary mb-0">Platformaga qo'shilish uchun ma'lumotlarni kiriting</p>
+                    </div>
+
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Formadagi har bir inputni chiroyli chiqarish -->
+                        <div class="registration-form-wrapper">
+                            {{ nurulloh.as_p }}
+                        </div>
+
+                        <!-- Tugma -->
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg shadow-sm action-btn">
+                                <i class="fas fa-rocket me-2"></i>Hisob yaratish
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4 text-muted opacity-25">
+
+                    <!-- Kirish sahifasiga yo'llanma -->
+                    <div class="text-center">
+                        <p class="text-secondary mb-0">Akkauntingiz bormi?
+                            <a href="{% url 'login' %}" class="fw-bold text-decoration-none" style="color: #0d6efd;">Kirish</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pastki yozuv -->
+            <p class="text-center text-muted mt-4 small" style="font-size: 0.85rem;">
+                &copy; 2026 Barcha huquqlar himoyalangan.
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* 1. Kard animatsiyasi va soyasi */
+    .auth-card {
+        background: #ffffff;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.05) !important;
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* 2. Markaziy Ikonka (Binafsha-ko'k Gradient) */
+    .icon-box {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 16px rgba(139, 92, 246, 0.25);
+    }
+
+    /* 3. Forma elementlari dizayni */
+    .registration-form-wrapper p {
+        margin-bottom: 20px;
+    }
+
+    .registration-form-wrapper label {
+        display: block;
+        font-weight: 600;
+        color: #475569;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+    }
+
+    .registration-form-wrapper input {
+        width: 100%;
+        padding: 14px 18px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 12px;
+        background-color: #f8fafc;
+        color: #334155;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    /* Fokus effekti */
+    .registration-form-wrapper input:focus {
+        border-color: #0d6efd;
+        background-color: #ffffff;
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15);
+    }
+
+    /* Django'ning yordamchi matnlari (help text) va xatolari (errors) uchun maxsus stilar */
+    .registration-form-wrapper .helptext {
+        display: block;
+        font-size: 0.8rem;
+        color: #64748b;
+        margin-top: 6px;
+    }
+
+    .registration-form-wrapper ul.errorlist {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 6px;
+        margin-bottom: 0;
+    }
+
+    .registration-form-wrapper ul.errorlist li {
+        color: #ef4444; /* Qizil xato rangi */
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    /* 4. Tugma interaktivligi */
+    .action-btn {
+        border-radius: 12px;
+        font-weight: 600;
+        padding: 12px 0;
+        transition: all 0.3s ease;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(13, 110, 253, 0.2);
+    }
+</style>
 {% endblock %}

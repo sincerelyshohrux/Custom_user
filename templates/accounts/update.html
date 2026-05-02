@@ -1,9 +1,149 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h4>Update Profile</h4>
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
- <p>{{ form.as_p }}</p>
-  <button type="submit">save</button>
-</form>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <!-- Animatsiya bilan chiquvchi kard -->
+            <div class="card update-card shadow-lg border-0">
+                <div class="card-body p-4 p-md-5">
+
+                    <!-- Markazlashgan zamonaviy sarlavha qismi -->
+                    <div class="text-center mb-4 pb-2">
+                        <div class="icon-box mx-auto mb-3">
+                            <i class="fas fa-user-edit fa-lg text-white"></i>
+                        </div>
+                        <h3 class="fw-bold text-dark mb-1">Profilni tahrirlash</h3>
+                        <p class="text-secondary mb-0">Ma'lumotlaringizni yangilang va saqlang</p>
+                    </div>
+
+                    <hr class="mb-4 text-muted opacity-25">
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Formaning ichki qismi -->
+                        <div class="update-form-container">
+                            {{ form.as_p }}
+                        </div>
+
+                        <!-- Tugmalar qismi -->
+                        <div class="d-grid gap-3 mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg shadow-sm action-btn">
+                                <i class="fas fa-save me-2"></i>O'zgarishlarni saqlash
+                            </button>
+                            <a href="{% url 'profile' %}" class="btn btn-light btn-lg border action-btn text-secondary">
+                                Bekor qilish
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* 1. Kard animatsiyasi va soyasi */
+    .update-card {
+        border-radius: 20px;
+        background: #ffffff;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.04) !important;
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* 2. Markaziy Ikonka (Gradient) */
+    .icon-box {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 16px rgba(59, 130, 246, 0.25);
+    }
+
+    /* 3. Forma elementlari dizayni (create.html bilan bir xil qilingan) */
+    .update-form-container p {
+        margin-bottom: 20px;
+    }
+
+    .update-form-container label {
+        display: block;
+        font-weight: 600;
+        color: #475569;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+    }
+
+    .update-form-container input,
+    .update-form-container textarea,
+    .update-form-container select {
+        width: 100%;
+        padding: 14px 18px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 12px;
+        background-color: #f8fafc;
+        color: #334155;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    /* Fokus effekti */
+    .update-form-container input:focus,
+    .update-form-container textarea:focus,
+    .update-form-container select:focus {
+        border-color: #0d6efd;
+        background-color: #ffffff;
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15);
+    }
+
+    /* Rasm (Profil rasmi) yuklash tugmasini chiroyli qilish */
+    .update-form-container input[type="file"] {
+        padding: 10px;
+        background-color: #f8fafc;
+        color: #64748b;
+    }
+
+    .update-form-container input[type="file"]::file-selector-button {
+        background-color: #e2e8f0;
+        color: #334155;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        margin-right: 15px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .update-form-container input[type="file"]::file-selector-button:hover {
+        background-color: #cbd5e1;
+    }
+
+    /* 4. Tugmalar interaktivligi */
+    .action-btn {
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+</style>
 {% endblock %}

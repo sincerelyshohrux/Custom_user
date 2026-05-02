@@ -2,17 +2,139 @@
 {% load static %}
 
 {% block content %}
-<h1>My Profile</h1>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 col-xl-5">
+            <!-- Animatsiya bilan chiquvchi Profil Kartasi -->
+            <div class="card profile-card border-0">
+                <!-- Chiroyli Gradient Muqova (Cover) -->
+                <div class="profile-cover"></div>
 
-{% if profile.image %}
-    <img src="{{ profile.image.url }}" width="200">
-{% else %}
-    <img src="{% static 'image/personcha.png' %}" width="200">
-{% endif %}
+                <!-- Rasm (Muqova va tana qismini kesib turadi) -->
+                <div class="profile-avatar-wrapper text-center">
+                    {% if profile.image %}
+                        <img src="{{ profile.image.url }}" class="profile-avatar shadow-sm" alt="Profile Image">
+                    {% else %}
+                        <!-- Rasm yo'q bo'lganda default rasm -->
+                        <img src="{% static 'image/personcha.png' %}" class="profile-avatar shadow-sm" alt="Default User">
+                    {% endif %}
+                </div>
 
-<p>My USERNAME: {{ profile.user.username }}</p>
-<p>My Phone nums: {{ profile.user.phone }}</p>
-<p>My AGE: {{ profile.age }}</p>
-<p>My bio: {{ profile.bio }}</p>
-<a href="{% url 'update' %}">Edit profile</a>
-{% endblock %}tml>
+                <!-- Ma'lumotlar qismi -->
+                <div class="card-body p-4 p-md-5 pt-2 text-center">
+                    <!-- Ism va Username -->
+                    <h3 class="fw-bold text-dark mb-0">@{{ profile.user.username }}</h3>
+                    <p class="text-secondary small mb-4">Foydalanuvchi profili</p>
+
+                    <!-- Yosh va Telefon (Zamonaviy qutichalar) -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-6">
+                            <div class="stat-box p-3">
+                                <span class="d-block text-muted small fw-semibold text-uppercase mb-1">Yoshi</span>
+                                <span class="fs-5 fw-bold text-dark">{{ profile.age }}</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stat-box p-3">
+                                <span class="d-block text-muted small fw-semibold text-uppercase mb-1">Telefon</span>
+                                <span class="fs-6 fw-bold text-dark mt-1 d-block">{{ profile.user.phone|default:"Kiritilmagan" }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bio qismi -->
+                    <div class="bio-box text-start p-4 mb-4">
+                        <h6 class="text-uppercase fw-bold small mb-2" style="color: #3b82f6;">
+                            <i class="fas fa-quote-left me-2 opacity-50"></i>Men haqimda
+                        </h6>
+                        <p class="mb-0 text-dark" style="line-height: 1.6; font-size: 0.95rem;">
+                            {{ profile.bio|default:"Bio hali to'ldirilmagan. O'zingiz haqingizda ma'lumot qo'shing..." }}
+                        </p>
+                    </div>
+
+                    <!-- Tugma -->
+                    <div class="d-grid mt-2">
+                        <a href="{% url 'update' %}" class="btn btn-primary btn-lg action-btn">
+                            <i class="fas fa-user-edit me-2"></i>Profilni tahrirlash
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Karta tugashi -->
+        </div>
+    </div>
+</div>
+
+<style>
+    /* 1. Karta animatsiyasi va soyasi */
+    .profile-card {
+        border-radius: 20px;
+        background: #ffffff;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.05) !important;
+        animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow: hidden; /* Gradient muqova burchaklardan toshib ketmasligi uchun */
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 2. Gradient Muqova (Cover Photo o'rnida) */
+    .profile-cover {
+        height: 140px;
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    }
+
+    /* 3. Avatarni muqova ustiga chiqarish */
+    .profile-avatar-wrapper {
+        margin-top: -75px; /* Rasmni tepaga tortish */
+        margin-bottom: 15px;
+    }
+
+    .profile-avatar {
+        width: 140px;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 6px solid #ffffff; /* Qalin oq ramka uni fondan ajratib turadi */
+        background-color: #ffffff;
+    }
+
+    /* 4. Statistika qutichalari (Yosh, Telefon) */
+    .stat-box {
+        background-color: #f8fafc;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .stat-box:hover {
+        background-color: #f1f5f9;
+        border-color: #cbd5e1;
+    }
+
+    /* 5. Bio qutisi dizayni */
+    .bio-box {
+        background-color: #eff6ff;
+        border-radius: 14px;
+        border-left: 4px solid #3b82f6;
+    }
+
+    /* 6. Tugma interaktivligi */
+    .action-btn {
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(13, 110, 253, 0.2);
+    }
+</style>
+{% endblock %}
