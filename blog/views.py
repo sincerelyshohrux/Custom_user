@@ -29,3 +29,14 @@ def create_blog(request):
     else:
         form=BlogForm()
     return render(request,"blog/create.html",{'form':form})
+
+
+
+
+# blog (yoki tegishli app) ichidagi views.py
+from django.shortcuts import render, get_object_or_404
+from .models import Blog # modelingiz nomi nima bo'lsa shuni yozing
+
+def blog_detail(request, id):
+    blog = get_object_or_404(Blog, id=id)
+    return render(request, 'accounts/detail.html', {'blog': blog})

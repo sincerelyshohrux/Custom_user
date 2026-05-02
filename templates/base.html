@@ -15,9 +15,9 @@
         /* UMUMIY STILLAR */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #fafafa; /* Asosiy fon ochroq qilindi */
+            background-color: #fafafa;
             color: #333;
-            overflow-x: hidden; /* Gorizontal skroll chiqib ketmasligi uchun */
+            overflow-x: hidden;
             position: relative;
         }
 
@@ -25,17 +25,16 @@
         .bg-pattern {
             position: fixed;
             top: -50px; left: -50px; right: -50px; bottom: -50px;
-            /* Juda och kulrang nuqtalar, toza oq fonda harakatni sezdirmasdan bildirish uchun */
             background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
             background-size: 35px 35px;
-            z-index: -1; /* Barcha kontent orqasida turadi */
-            transition: transform 0.1s ease-out; /* Silliq harakatlanishi uchun */
+            z-index: -1;
+            transition: transform 0.1s ease-out;
         }
 
         /* ZAMONAVIY NAVBAR STILLARI */
         .navbar {
             background-color: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px); /* Orqa fonni xiralashtirish effekti */
+            backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             box-shadow: 0 4px 20px rgba(0,0,0,0.02);
             border-bottom: 1px solid rgba(0,0,0,0.04);
@@ -74,7 +73,6 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.1);
         }
 
-        /* FOOTER */
         .footer {
             background: transparent;
             padding: 40px 0;
@@ -87,10 +85,9 @@
     <!-- Harakatlanuvchi orqa fon elementi -->
     <div class="bg-pattern" id="movingBg"></div>
 
-    <!-- Zamonaviy Navbat -->
+    <!-- Zamonaviy Navbar -->
     <nav class="navbar navbar-expand-lg sticky-top mb-5">
         <div class="container">
-
             <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-content="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -108,12 +105,10 @@
                             <i class="fas fa-user-circle me-1"></i> {{ request.user.username }}
                         </span>
                         <a class="nav-link me-4" href="{% url 'profile' %}">Profil</a>
-                        <!-- Chiqish tugmasi yaxshilandi -->
                         <a href="{% url 'logout' %}" class="btn btn-outline-danger px-4 py-2" style="border-radius: 10px; font-weight: 500;">
                             <i class="fas fa-sign-out-alt me-1"></i> Chiqish
                         </a>
                     {% else %}
-                        <!-- Kirish tugmasi yaxshilandi -->
                         <a href="{% url 'login' %}" class="btn btn-primary px-4 py-2 shadow-sm" style="border-radius: 10px; font-weight: 500;">
                             <i class="fas fa-sign-in-alt me-1"></i> Kirish
                         </a>
@@ -124,14 +119,12 @@
     </nav>
 
     <!-- Asosiy Kontent Maydoni -->
-    <!-- Z-index kontent doim fondan oldinda turishi uchun -->
     <main class="container" style="position: relative; z-index: 1;">
         {% block content %}
-        <!-- Sahifalar shu yerga yuklanadi -->
         {% endblock %}
     </main>
 
-    <!-- Kichik Footer -->
+    <!-- Footer -->
     <footer class="footer text-center">
         <div class="container">
             <p class="text-secondary mb-0" style="font-size: 0.9rem;">&copy; Barcha huquqlar himoyalangan.</p>
@@ -145,13 +138,8 @@
     <script>
         document.addEventListener('mousemove', function(e) {
             const bg = document.getElementById('movingBg');
-
-            // X va Y o'qlari bo'yicha markazdan qancha uzoqlashganini hisoblash
-            // 0.03 - bu tezlik koeffitsiyenti. Raqam qancha kichik bo'lsa shuncha sekin va tabiiy qimirlaydi
             const x = (window.innerWidth - e.pageX * 2) * 0.02;
             const y = (window.innerHeight - e.pageY * 2) * 0.02;
-
-            // Nuqtali fonni ekranda surish
             bg.style.transform = `translate(${x}px, ${y}px)`;
         });
     </script>

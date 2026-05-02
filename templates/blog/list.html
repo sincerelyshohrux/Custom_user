@@ -2,8 +2,7 @@
 
 {% block content %}
 <div class="container py-5">
-    <!-- Yuqori qism: Sarlavha va Tugma -->
-    <!-- flex-md-row yordamida mobil telefonda chiroyli ko'rinishi ta'minlandi -->
+    <!-- Yuqori qism -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
         <div>
             <h2 class="fw-bold text-dark mb-1">So'nggi maqolalar</h2>
@@ -32,14 +31,12 @@
 
                 <!-- Kontent qismi -->
                 <div class="card-body p-4 d-flex flex-column">
-                    <!-- Sarlavha -->
                     <h5 class="card-title fw-bold text-dark mb-3 blog-title">
                         {{ blog.title }}
                     </h5>
 
-                    <!-- Muallif va sana -->
+                    <!-- Muallif -->
                     <div class="d-flex align-items-center mt-auto">
-                        <!-- Muallif avatari -->
                         <div class="author-avatar me-3">
                             {{ blog.owner.username|slice:":1"|upper }}
                         </div>
@@ -50,17 +47,17 @@
                     </div>
                 </div>
 
-                <!-- Tugma qismi -->
+                <!-- Batafsil o'qish tugmasi -->
                 <div class="card-footer bg-white border-0 p-4 pt-0">
-                    <!-- Eslatma: href ichidagi URL nomini o'zingizning urls.py faylingizdagi detail sahifa nomiga to'g'rilab olasiz (masalan: 'blog-detail') -->
-                    <a href="#" class="btn btn-outline-primary w-100 read-more-btn">
+                    <!-- LINK SHU YERDA: url 'detail' -->
+                    <a href="{% url 'detail' blog.id %}" class="btn btn-outline-primary w-100 read-more-btn">
                         Batafsil o'qish <i class="fas fa-arrow-right ms-1" style="font-size: 0.8rem;"></i>
                     </a>
                 </div>
             </div>
         </div>
         {% empty %}
-        <!-- Bo'sh holat (Empty State) chiroyli qilindi -->
+        <!-- Bo'sh holat -->
         <div class="col-12 text-center py-5 empty-state">
             <div class="mb-4">
                 <i class="fas fa-folder-open fa-4x text-muted opacity-25"></i>
@@ -76,7 +73,6 @@
 </div>
 
 <style>
-    /* 1. Sarlavha uchun qisqartirish: 2 qatordan oshsa "..." qo'yadi va kard buzilmaydi */
     .blog-title {
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -84,11 +80,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
         line-height: 1.4;
-        min-height: 2.8rem; /* Sarlavha kalta bo'lsa ham kard balandligi bir xil turishi uchun */
+        min-height: 2.8rem;
         text-transform: capitalize;
     }
 
-    /* 2. Kardlar uchun Hover Effekt */
     .blog-card {
         border-radius: 16px;
         overflow: hidden;
@@ -100,7 +95,6 @@
         box-shadow: 0 15px 30px rgba(0,0,0,0.08) !important;
     }
 
-    /* 3. Rasmlar proporsiyasi (16:9) va Zoom effekti */
     .card-img-wrapper {
         overflow: hidden;
         border-top-left-radius: 16px;
@@ -108,15 +102,14 @@
     }
     .blog-img {
         width: 100%;
-        aspect-ratio: 16 / 9; /* Barcha rasmlarni standart 16:9 videoga o'xshash qilib kesadi */
+        aspect-ratio: 16 / 9;
         object-fit: cover;
         transition: transform 0.5s ease;
     }
     .blog-card:hover .blog-img {
-        transform: scale(1.05); /* Sichqoncha borganda mayingina kattalashadi */
+        transform: scale(1.05);
     }
 
-    /* 4. Muallif Avatari (Zamonaviy gradient) */
     .author-avatar {
         width: 42px;
         height: 42px;
@@ -131,7 +124,6 @@
         box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    /* 5. 'Batafsil o'qish' tugmasi chiroyli hover qilingan */
     .read-more-btn {
         border-radius: 10px;
         font-weight: 600;
@@ -151,7 +143,6 @@
         padding: 12px 24px;
     }
 
-    /* 6. Bo'sh holat (Empty State) dizayni */
     .empty-state {
         background: #ffffff;
         border-radius: 16px;
